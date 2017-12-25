@@ -1,0 +1,20 @@
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS \
+                $ngx_addon_dir/user_init.cc \
+                $ngx_addon_dir/user_register.cc \
+                $ngx_addon_dir/user_login.cc \
+                $ngx_addon_dir/user_set_prof.cc \
+                $ngx_addon_dir/user_get_prof.cc \
+                $ngx_addon_dir/user_get_achieve.cc \
+                $ngx_addon_dir/user_get_ugc_list.cc \
+                $ngx_addon_dir/user_check_reg.cc \
+                $ngx_addon_dir/UserInitProcessor.cpp \
+                $ngx_addon_dir/UserRegisterProcessor.cpp \
+                $ngx_addon_dir/UserLoginProcessor.cpp \
+                $ngx_addon_dir/UserSetProfProcessor.cpp \
+                $ngx_addon_dir/UserGetProfProcessor.cpp \
+                $ngx_addon_dir/UserGetAchieveProcessor.cpp \
+                $ngx_addon_dir/UserGetUgcListProcessor.cpp \
+                $ngx_addon_dir/UserCheckRegProcessor.cpp"
+
+CORE_INCS="$CORE_INCS $ngx_addon_dir -I/usr/include/"
+CORE_LIBS="$CORE_LIBS -L/usr/lib64/ -lprotobuf -lstdc++"

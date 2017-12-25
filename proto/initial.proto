@@ -1,0 +1,76 @@
+import "common_data.proto";
+package Cell;
+
+//用户注册请求信息
+message RegReqMsg
+{
+    optional string session_token = 1; // 用户session
+    optional uint32 uid = 2;     // 初始化阶段获取的uid
+    optional string phone = 3;   // 手机号码
+    optional string email = 4;   // 电子邮箱
+    optional Gender gender = 5;  // 性别
+    optional string birthday = 6; // 生日
+    optional string avada_url = 7; // 用户头像url
+    optional string usr_name = 8;  // 注册用户名, 可以继承自第三方平台
+    optional string password = 9;  // 用户口令密码
+    optional RegSource reg_source = 10; // 用户注册来源
+    optional string avada_size = 11;  //图像尺寸widthxheight
+    optional BloodType blood_type = 12;  //血型
+    optional ConstellationType constellation = 13;  //星座
+    optional ZodiacType zodiac = 14;    //属相
+    optional Geo geo = 15;             //用户当前经纬度
+};
+
+// 用户注册响应信息
+message RegRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional UserStat user_stat = 2; // 用户状态
+};
+
+//用户登陆请求消息, 单一性入口
+message LoginReqMsg
+{
+    optional string usr_info = 1; // 用户名、手机号、邮箱, 本期暂时仅支持手机号
+    optional string password = 2;  // 用户口令密码
+    optional Geo geo = 3;          //用户当前经纬度
+};
+//用户登陆响应消息
+message LoginRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional uint32 uid = 2;  // 用户已有的uid
+    optional string session_token = 3; // 用户session
+    optional UserStat user_stat =4; // 用户状态
+};
+
+// 初始化请求消息, app首次启动或uid消失时调用此接口,谨慎调用这个api
+message InitReqMsg
+{
+    optional string device_id = 1; // android:imei ios:idfa, 即设备唯一识别码
+    optional DeviceType device_type = 2;  // 枚举类型
+    optional string app_key = 3;  // app秘钥
+    optional string app_ver = 4;  // app版本号
+    
+};
+// 用户初始化响应消息
+message InitRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional uint32 uid = 2; //临时分配的uid, 如果用户注册登陆, 则此uid归属这个用户
+    optional string session_token = 3; // 用户session
+    optional UserStat user_stat =4; // 用户状态
+};
+
+// 检查用户名是否注册
+message CheckUserRegReqMsg
+{
+    optional string usr_info = 1; // 用户名、手机号、邮箱, 本期暂时仅支持手机号
+};
+
+// 设置用户个人账户信息响应
+message CheckUserRegRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional UserStat user_stat = 2;  //用户状态
+};

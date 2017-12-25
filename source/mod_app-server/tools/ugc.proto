@@ -1,0 +1,173 @@
+import "common_data.proto";
+package Cell;
+
+//用户上传UGC信息请求, 图片通过http协议传到图片服务器, 不封装到pb
+message UploadUGCReqMsg
+{
+    required uint32 uid = 1;  // 用户uid
+    required string session_token = 2; // 用户登陆session_token
+    optional UGC ugc = 3; // 用户产生的ugc请求
+};
+
+//用户上传UGC信息响应
+message UploadUGCRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional uint64 ugc_id = 2; // UGC id
+};
+
+// 用户拉取附近的ugc
+message PullUGCReqMsg
+{
+    required uint32 uid = 1;  // 用户uid
+    required string session_token = 2; // 用户登陆session_token
+    optional Geo geo = 3;
+    optional uint32 need_num = 4;  // 客户端希望获取的附近ugc数量
+    optional uint64 last_id = 5;   //上次获取的最大消息种子id，初始为0
+    optional PullType pull_type = 6 [default = PT_PULL];  //获取消息类型，打牌或者普通拉取消息
+	repeated uint32 forbid_uid = 7;  //不想看的userid
+};
+
+//拉去ugc消息列表, 这时不需要获取每条消息的具体信息, 减小消息传递量
+//等客户端本地过滤之后, 选取某个具体的ugci再去获取ugc消息
+message PullUGCRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    repeated UGCIdList ugc_id_list = 2;  // ugc列表
+};
+
+//根据ugcid获取消息请求
+message GetUGCReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    repeated uint64 ugc_id = 3;    //消息种子传播者ugcid
+    repeated uint32 org_uid = 4;   //消息来源者
+    optional Geo geo = 5;          //geo，用来计算距离
+}
+
+//消息详情响应
+message GetUGCRespMsg
+{
+    required RetCode ret_code = 1;
+    repeated UGC ugc = 2;
+    repeated uint32 post_num = 3;    //被传播次数
+    repeated uint32 pass_num = 4;    //被消灭次数
+    repeated uint32 post_dist = 5;   //总距离
+    repeated string usr_name = 6;    //消息用户昵称
+    repeated string avada_url = 7;   //消息用户图像
+    repeated uint32 dist = 8;        //消息用户距离当前用户的距离
+    repeated Gender gender = 9;      //消息用户性别
+    repeated uint32 alive = 10;      //消息种子存活量
+    repeated CardType card_type = 11;
+}
+
+//传播,消灭行为请求体
+message PostUGCReqMsg {
+    required uint32 uid = 1;
+    required string session_token = 2;
+    optional uint64 ugc_id = 3;      //消息id
+    optional uint64 msid = 4;        //消息种子id
+    optional uint32 org_uid = 5;     //消息来源者id
+    optional PostType post_type = 6;
+    optional Geo geo = 7;
+}
+
+//传播，消灭行为响应体
+message PostUGCRespMsg {
+    required RetCode ret_code = 1; // 响应码
+}
+
+// 用户请求ugc列表
+message GetUGCListReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    optional UGCListType ugc_list_type = 3;
+    optional uint32 need_ugc_num = 4; //需要获取的ugc的数量
+    optional uint32 last_id = 5;     // 最后接收到的id值，首次写0
+    optional uint32 org_uid = 6;     // 请求具体用户的uid
+};
+
+// 用户请求ugc列表响应消息
+message GetUGCListRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    repeated UGCIdList ugc_id_list = 2;  // ugc列表
+};
+
+// 给消息添加用户评论
+message AddCommentReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    optional uint64 ugc_id = 3;      //消息id
+    optional uint64 msid = 4;        //消息种子id
+    optional uint32 org_uid = 5;     //消息来源者id
+    optional string comment = 6;     //评论内容
+}
+
+// 添加评论响应
+message AddCommentRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional uint64 mcid = 2;      //评论id
+}
+
+// 获取评论请求
+message GetCommentReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    required CommentType comment_type =3;    //获取评论类型
+    required uint64 cid = 4;         //获取评论所需要的id；如果是USER_POST_TYPE或者USER_RECV_TYPE，则是当前用户id；否则是消息ugc_id
+    optional uint64 last_id = 5;     //最后一次评论id值，首次赋值0
+    optional uint32 need_num = 6;    //一次获取评论的个数，不大于5个
+}
+
+// 评论详情响应
+message GetCommentRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    message CommentDetail
+    {
+        optional uint64 mcid = 1;      //消息id
+        optional uint32 uid = 2;   //评论者id
+        optional string name = 3;      //评论者名字
+        optional string avada_url = 4;  //评论者图像
+        optional string comment = 5;    //评论内容
+        optional string create_time = 6;   //评论时间
+    }
+    repeated CommentDetail comments = 2;
+}
+
+// 收藏消息请求
+message AddCollectionReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    required ConfirmType confirmType = 3;    // 动作类型，收藏或取消
+    required UGCIdList ugc_id_list = 4;      // 收藏消息信息
+}
+
+// 添加评论响应
+message AddCollectionRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional uint64 clt_id = 2;    // 收藏id
+}
+
+// 打牌结果请求
+message PlayCardReqMsg
+{
+    required uint32 uid = 1;
+    required string session_token = 2;
+    optional Geo geo = 3;
+    optional int32 coin = 4;
+}
+
+//
+message PlayCardRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+}

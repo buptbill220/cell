@@ -1,0 +1,8 @@
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS \
+                $ngx_addon_dir/common_data.pb.cc \
+                $ngx_addon_dir/initial.pb.cc \
+                $ngx_addon_dir/account.pb.cc \
+                $ngx_addon_dir/ugc.pb.cc"
+
+CORE_INCS="$CORE_INCS $ngx_addon_dir -I/usr/include/"
+CORE_LIBS="$CORE_LIBS -L/usr/lib64/ -lprotobuf -lstdc++"

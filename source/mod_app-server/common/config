@@ -1,0 +1,11 @@
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS  \
+                $ngx_addon_dir/reg_var.c \
+                $ngx_addon_dir/sha1.c \
+                $ngx_addon_dir/hmac-sha1.c \
+                $ngx_addon_dir/urlsafe_b64.c \
+                $ngx_addon_dir/b64.c \
+                $ngx_addon_dir/geohash.c"
+
+CORE_INCS="$CORE_INCS $ngx_addon_dir $ngx_addon_dir/rapidjson/"
+
+CORE_LIBS="$CORE_LIBS -lstdc++"

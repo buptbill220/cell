@@ -1,0 +1,9 @@
+NGX_ADDON_SRCS="$NGX_ADDON_SRCS \
+                $ngx_addon_dir/common_func.cc \
+                $ngx_addon_dir/mysql_common.c \
+                $ngx_addon_dir/pv_http_head.c \
+                $ngx_addon_dir/geo_func.c \
+                $ngx_addon_dir/BaseProcessor.cpp"
+
+CORE_INCS="$CORE_INCS $ngx_addon_dir"
+CORE_LIBS="$CORE_LIBS -lstdc++ -lm"
