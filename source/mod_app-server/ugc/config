@@ -12,9 +12,7 @@ NGX_ADDON_SRCS="$NGX_ADDON_SRCS \
                 $ngx_addon_dir/ugc_get_comment.cc \
                 $ngx_addon_dir/UgcGetCommentProcessor.cpp \
                 $ngx_addon_dir/ugc_add_collection.cc \
-                $ngx_addon_dir/UgcAddCollectionProcessor.cpp \
-                $ngx_addon_dir/ugc_play_card.cc \
-                $ngx_addon_dir/UgcPlayCardProcessor.cpp"
+                $ngx_addon_dir/UgcAddCollectionProcessor.cpp"
 
 CORE_INCS="$CORE_INCS $ngx_addon_dir -I/usr/include"
 CORE_LIBS="$CORE_LIBS -L /usr/lib64/ -lprotobuf -lstdc++"

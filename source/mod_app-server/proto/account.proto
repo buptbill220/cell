@@ -1,0 +1,59 @@
+import "common_data.proto";
+package Cell;
+
+// 获取用户个人账户信息
+
+message GetUserProfileReqMsg
+{
+    optional uint32 uid = 1;  // 用户uid
+    optional string session_token = 2; // 用户登陆session_token
+    optional UserProfileType usr_prf_type = 3;    //消息类型
+    optional uint32 org_uid = 4;  // 请求用户的uid
+};
+
+// 获取用户个人账户信息响应
+message GetUserProfileRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+    optional string phone = 2;   // 手机号码
+    optional string email = 3;   // 电子邮箱
+    optional Gender gender = 4;  // 性别
+    optional string birthday = 5; // 生日
+    optional string avada_url = 6; // 用户头像url
+    optional string usr_name = 7;  //用户名, 可以继承自第三方平台
+    optional string avada_size = 8; //图像尺寸
+    optional BloodType blood_type = 9;  //血型
+    optional ConstellationType constellation = 10;  //星座
+    optional ZodiacType zodiac = 11;   //属相
+}
+//获取用户成就信息
+message GetUserAchieveRespMsg {
+    required RetCode ret_code = 1; // 响应码
+    // ugc相关的成就6个字段
+    optional uint32 create_ugc_num = 2;    //产生的消息数量
+    optional uint32 post_ugc_num = 3;    //传播的消息次数
+    optional uint32 pass_ugc_num = 4;    //消灭的消息次数
+    optional uint32 total_post_dist = 5;    //传播的总公里数
+    optional uint32 max_post_dist = 6;    //最远传播的距离
+    optional uint32 ugc_seed_num = 7;            //细胞存活量
+    // pk相关的成就用如下4个字段
+    optional int64  pk_coin = 8;
+    optional uint32 pk_win_num = 9;
+    optional uint32 pk_lose_num = 10;
+    optional uint32 pk_rank = 11;
+}
+// 设置用户个人账户信息请求
+message SetUserProfileReqMsg
+{
+    optional uint32 uid = 1;  // 用户uid
+    optional string session_token = 2; // 用户登陆session_token
+    optional string avada_url = 3; // 用户头像url
+    optional string usr_name = 4;  //用户名
+    optional string avada_size = 5; //图像尺寸widthxheight
+};
+
+// 设置用户个人账户信息响应
+message SetUserProfileRespMsg
+{
+    required RetCode ret_code = 1; // 响应码
+};

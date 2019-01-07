@@ -19,20 +19,23 @@ export LUAJIT_INC=$luajit_root/luajit/include/luajit-2.1
 export DESTDIR=$luajit_root
 export WITH_TAIR_LUA=1
 export DESTDIR=$luajit_root
-
+sleep 2
+echo $ts
 # lua-redis-parser, change to static linking
-cd $ts/../mod_thirdParty/lua-redis-parser-0.10;
+cd $ts/mod_thirdParty/lua-redis-parser-0.10;
 make LUA_INCLUDE_DIR=$luajit_root/luajit/include/luajit-2.1
-make install LUA_LIB_DIR=/luajit/lib
+make install LUA_LIB_DIR=$luajit_root/luajit/lib
 
 SVN_PROTO_PATH="svn://10.162.211.161/proto"
 PROTO_VERSION="-r 98"
 PROTO_PATH="./mod_app-server/proto"
+pwd
+sleep 2
 cd $ts;
-svn export $PROTO_VERSION $SVN_PROTO_PATH/common_data.proto $PROTO_PATH/common_data.proto
-svn export $PROTO_VERSION $SVN_PROTO_PATH/initial.proto $PROTO_PATH/initial.proto
-svn export $PROTO_VERSION $SVN_PROTO_PATH/account.proto $PROTO_PATH/account.proto
-svn export $PROTO_VERSION $SVN_PROTO_PATH/ugc.proto $PROTO_PATH/ugc.proto
+#svn export $PROTO_VERSION $SVN_PROTO_PATH/common_data.proto $PROTO_PATH/common_data.proto
+#svn export $PROTO_VERSION $SVN_PROTO_PATH/initial.proto $PROTO_PATH/initial.proto
+#svn export $PROTO_VERSION $SVN_PROTO_PATH/account.proto $PROTO_PATH/account.proto
+#svn export $PROTO_VERSION $SVN_PROTO_PATH/ugc.proto $PROTO_PATH/ugc.proto
 protoc $PROTO_PATH/common_data.proto --cpp_out=$PROTO_PATH -I$PROTO_PATH
 protoc $PROTO_PATH/initial.proto --cpp_out=$PROTO_PATH -I$PROTO_PATH
 protoc $PROTO_PATH/account.proto --cpp_out=$PROTO_PATH -I$PROTO_PATH
@@ -53,8 +56,6 @@ cd $ts/nginx;
     --with-http_stub_status_module \
     --with-http_ssl_module \
     --with-ld-opt="-Wl,-rpath,/usr/local/lib" \
-    --with-pcre=/home/thirds/pcre-8.36 \
-    --with-zlib=/home/thirds/zlib-1.2.8 \
     --without-select_module \
     --without-poll_module \
     --without-http_userid_module \

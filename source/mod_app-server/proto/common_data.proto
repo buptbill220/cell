@@ -1,0 +1,165 @@
+package Cell;
+
+enum Gender  // 性别
+{
+    GR_MALE = 0; //男性
+    GR_FEMALE = 1; // 女性
+    GR_UNKNOW = 2; // 未知
+};
+
+enum RegSource // 注册来源  
+{
+    RS_NATIVE = 0;  // 系统原生注册
+    RS_WEIBO = 1;   // 微博登陆
+    RS_WEIXIN = 2;  // 微信登陆
+    RS_QQ = 3;      // qq登陆
+};
+
+enum DeviceType
+{
+    DT_IOS = 0;  // apple ios device
+    DT_ANDROID = 1; // android device
+    DT_WP = 2; // windows phone device
+};
+
+enum UserProfileType {
+    US_PROFILE = 0;        //用户信息
+    US_UGC_ACHIEVE = 1;    //用户ugc成就
+    US_PK_ACHIEVE = 2;     //用户PK成就
+}
+
+enum UserStat
+{
+    US_REG_USER = 0; // 注册用户
+    US_UNREG_USER = 1; // 未注册用户, 即游客
+    US_UNKNOWN = 2; // 状态未知
+};
+
+enum NetworkType {
+    NT_2G = 0;  //2G
+    NT_3G = 1;  //3G
+    NT_4G = 2;  //4G
+    NT_WIFI = 3;//WIFI
+};
+
+enum UGCListType {
+    UGC_GEN = 0;    //请求自己的产生的消息
+    UGC_POST = 1;    //请求自己传播的消息
+    UGC_PASS = 2;    //请求自己消灭的消息
+    UGC_COLLECT = 3;    //请求自己收藏的消息
+};
+
+enum RetCode
+{
+    RC_SUCCESS = 0;
+    RC_PHONE_INVALID = 1;
+    RC_INNER_ERROR = 2;
+    RC_FAILED = 3;
+    RC_SESSION_INVALID = 4;
+};
+
+message Geo
+{
+    required float latitude = 1;
+    required float longitude = 2;
+}
+
+//定向
+enum TargetType {
+    T_MALE = 0;     //只让男性看到
+    T_FEMALE = 1;   //只让女性看到
+    T_ALL = 2;       //性别不限
+}
+
+enum CardType
+{
+    SPADE = 1;
+    HEART = 2;
+    DIAMOND = 3;
+    CLUB = 4;
+}
+
+enum ConfirmType
+{
+    OK = 1;
+    CANCEL = 2;
+}
+
+enum BloodType
+{
+    BLOOD_A = 1;    //A血型
+    BLOOD_B = 2;    //B血型
+    BLOOD_AB = 3;   //AB血型
+    BLOOD_O = 4;    //O血型
+}
+
+enum ConstellationType
+{
+    ARIES = 1;        //白羊座3.21-4.19
+    TAURUS = 2;       //金牛座4.20-5.20
+    GEIMINI = 3;      //双子座5.21-6.21
+    CANCER = 4;       //巨蟹座6.22-7.22
+    LEO = 5;          //狮子座7.23-8.22
+    VIRGO = 6;        //处女座8.23-9.22
+    LIBRA = 7;        //天秤座9.23-10.23
+    SCORPIO = 8;      //天蝎座10.24-11.22
+    SAGITTARIUS = 9;  //射手座11.23-12.21
+    CAPRICORN = 10;    //摩羯座12.22-1.19
+    AQUARIUS = 11;    //水瓶座1.20-2.18
+    PISCES = 12;      //双鱼座2.19-3.20
+}
+
+enum ZodiacType
+{
+    MOUTH = 1;        //鼠
+    COW = 2;          //牛
+    TIGGER = 3;       //虎
+    RABBIT = 4;       //兔
+    dragon = 5;       //龙
+    SNAKE = 6;        //蛇
+    HORSE = 7;        //马
+    SHEEP = 8;        //羊
+    MONKEY = 9;       //猴
+    CHICKEN = 10;     //鸡
+    DOG = 11;         //狗
+    PIG = 12;         //猪
+}
+enum PostType {
+    PT_POST = 0;    //传播
+    PT_PASS = 1;    //消灭
+}
+
+enum PullType {
+    PT_PULL = 0;    //普通获取消息
+    PT_PLAY = 1;    //打牌
+}
+
+message MessageMeta {
+    optional string content = 1;
+    repeated string image = 2;
+    repeated string voice = 3;
+    repeated string video = 4;
+    repeated string img_size = 5;
+}
+message UGC
+{
+    optional MessageMeta message_meta = 1; 
+    optional Geo geo = 2;
+    optional TargetType target = 3;  //接口预留
+    optional CardType card_type = 4;
+}
+
+message UGCIdList
+{
+    optional uint64 ugc_id = 1;      //消息种子传播者ugcid
+    optional uint32 org_uid = 2;    //消息最初来源uid
+    optional uint64 msid = 3;       //消息来自哪个种子
+    optional uint64 mstid = 4;      //消息传播或消灭id
+}
+
+enum CommentType
+{
+    USER_POST_TYPE = 0;    //获取用户所发布的评论
+    USER_RECV_TYPE = 1;    //获取用户发布的消息收到的评论
+    MSG_TYPE = 2;          //获取一条消息所有评论
+}

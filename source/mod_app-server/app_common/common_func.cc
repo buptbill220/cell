@@ -17,7 +17,7 @@
 #include "ugc/UgcAddCommentProcessor.h"
 #include "ugc/UgcGetCommentProcessor.h"
 #include "ugc/UgcAddCollectionProcessor.h"
-#include "ugc/UgcPlayCardProcessor.h"
+//#include "ugc/UgcPlayCardProcessor.h"
 
 #define MAX_CIRCLE_IDX 0x7fffffff
 
@@ -255,10 +255,12 @@ ngx_int_t build_session(ngx_http_request_t* r, ngx_str_t* data)
             msg_type = s_message_type_values[UGC_ADD_CLT_MSG_IDX];
             s->processor = ObjectPallocator<UgcAddCollectionProcessor>::allocate(r->pool);
             break;
+            /*
         case UGC_PLAY_CARD_MSG:
             msg_type = s_message_type_values[UGC_PLAY_CARD_MSG_IDX];
             s->processor = ObjectPallocator<UgcPlayCardProcessor>::allocate(r->pool);
             break;
+            */
         default:
             msg_type = s_message_type_values[UNKNOWN_MSG_IDX];
             goto session_failed;

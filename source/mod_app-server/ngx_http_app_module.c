@@ -17,7 +17,7 @@
 #include "ugc/ugc_add_comment.h"
 #include "ugc/ugc_get_comment.h"
 #include "ugc/ugc_add_collection.h"
-#include "ugc/ugc_play_card.h"
+//#include "ugc/ugc_play_card.h"
 
 #include <time.h>
 
@@ -333,6 +333,7 @@ static variable_map_t app_vars[] = {
         ngx_string("add_collection_resp"),
         get_add_collection_resp,
         NULL },
+    /*
     // pk msg
     {
         ngx_string("pk_get_user_achieve_result"),
@@ -350,6 +351,7 @@ static variable_map_t app_vars[] = {
         ngx_string("pk_resp"),
         get_pk_resp,
         NULL },
+        */
     //ugc end
     {   ngx_null_string, NULL, NULL }
 };
